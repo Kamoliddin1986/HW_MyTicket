@@ -1,8 +1,8 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { AdminService } from './admin.service';
-import { CreateAdminDto } from './dto/create-admin.dto';
-import { UpdateAdminDto } from './dto/update-admin.dto';
 import { AuthAdminDto } from './dto/auth_admin.dto';
+import { LoginAdminDto } from './dto/login-admin.dto';
+import { ActiveCreatorAdminDto } from './dto/activeCreator-admin.dto';
 
 @Controller('admin')
 export class AdminController {
@@ -11,6 +11,10 @@ export class AdminController {
   @Post('auth')
   auth(@Body() authAdminDto: AuthAdminDto) {
     return this.adminService.auth(authAdminDto);
+  }
+  @Post('login')
+  login(@Body() loginAdminDto: LoginAdminDto) {
+    return this.adminService.login(loginAdminDto);
   }
 
   @Get()
@@ -23,9 +27,9 @@ export class AdminController {
     return this.adminService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAdminDto: UpdateAdminDto) {
-    return this.adminService.update(+id, updateAdminDto);
+  @Patch(':id/setrole')
+  update(@Param('id') id: string, @Body() activeCreatorAdminDto: ActiveCreatorAdminDto) {
+    return this.adminService.update(+id, activeCreatorAdminDto);
   }
 
   @Delete(':id')

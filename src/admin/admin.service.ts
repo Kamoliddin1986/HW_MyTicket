@@ -1,11 +1,11 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { CreateAdminDto } from './dto/create-admin.dto';
-import { UpdateAdminDto } from './dto/update-admin.dto';
 import { Admin } from './models/admin.model';
 import { InjectModel } from '@nestjs/sequelize';
 import * as bcrypt from 'bcrypt'
 import { JwtService } from '@nestjs/jwt';
 import { AuthAdminDto } from './dto/auth_admin.dto';
+import { LoginAdminDto } from './dto/login-admin.dto';
+import { ActiveCreatorAdminDto } from './dto/activeCreator-admin.dto';
 
 @Injectable()
 export class AdminService {
@@ -50,6 +50,37 @@ export class AdminService {
     
     }
 
+    async login(loginAdminDto: LoginAdminDto){
+      const {login, password} = loginAdminDto;
+      const admin = await this.AdminRepo.findOne({ where: {login}});
+      if(!admin) {
+        throw new BadRequestException('Admin not registered!!');
+      }
+      if(!admin.is_active) {
+        throw new BadRequestException('Admin is not active!!');
+      }
+  
+  
+      const isMatchPass = await bcrypt.compare(password, admin.hashed_password)
+      if(!isMatchPass) {
+        throw new BadRequestException('Admin not registered(pass)!!');
+      }
+  
+      const tokens = await this.getToken(admin)
+  
+      const hashed_refresh_token = await bcrypt.hash(tokens.refresh_token,7)
+      
+      const updateAdmin = await this.AdminRepo.update({
+        hashed_refresh_token: hashed_refresh_token},
+       {where: {id: admin.id}, returning: true}
+      ) 
+  
+     
+      let msg = 'Admin signed in'
+     
+    
+      return {msg, tokens}
+    }
 
     async getToken(Admin: Admin) {
       const jwtPayload = {
@@ -83,8 +114,8 @@ export class AdminService {
       return verib
     }
   
-    async update(id: number, updateAdminDto: UpdateAdminDto) {
-      const verib = await this.AdminRepo.update(updateAdminDto, {where: {id}})
+    async update(id: number, activeCreatorAdminDto: ActiveCreatorAdminDto) {
+      const verib = await this.AdminRepo.update(activeCreatorAdminDto, {where: {id}})
       return verib
     }
   
