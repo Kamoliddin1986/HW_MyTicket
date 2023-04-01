@@ -1,26 +1,36 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePaymentMethodDto } from './dto/create-payment_method.dto';
 import { UpdatePaymentMethodDto } from './dto/update-payment_method.dto';
+import { PaymentMethod } from './models/payment_method.model';
+import { InjectModel } from '@nestjs/sequelize';
 
 @Injectable()
 export class PaymentMethodService {
-  create(createPaymentMethodDto: CreatePaymentMethodDto) {
-    return 'This action adds a new paymentMethod';
+  constructor(
+    @InjectModel(PaymentMethod) private PaymentMethodRepo: typeof PaymentMethod
+    ) {}
+  
+    create(createPaymentMethodDto: CreatePaymentMethodDto) {
+      return this.PaymentMethodRepo.create(createPaymentMethodDto)
+    }
+  
+    async findAll() {
+  
+      const verib = await this.PaymentMethodRepo.findAll({include:{all: true}})
+      return verib
+    }
+  
+    async findOne(id: number) {
+      const verib = await this.PaymentMethodRepo.findByPk(id,{include:{all: true}})
+      return verib
+    }
+  
+    async update(id: number, updatePaymentMethodDto: UpdatePaymentMethodDto) {
+      const verib = await this.PaymentMethodRepo.update(updatePaymentMethodDto, {where: {id}})
+      return verib
+    }
+  
+    remove(id: number) {
+      return this.PaymentMethodRepo.destroy({where: {id}})
+    }
   }
-
-  findAll() {
-    return `This action returns all paymentMethod`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} paymentMethod`;
-  }
-
-  update(id: number, updatePaymentMethodDto: UpdatePaymentMethodDto) {
-    return `This action updates a #${id} paymentMethod`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} paymentMethod`;
-  }
-}

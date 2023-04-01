@@ -7,9 +7,11 @@ import { DeliveryMethod } from '../delivery_method/models/delivery_method.model'
 import { PaymentMethod } from '../payment_method/models/payment_method.model';
 import { DiscountMethod } from '../discount_method/models/discount_method.model';
 import { Booking } from './models/booking.model';
+import { Ticket } from '../ticket/models/ticket.model';
+import { Cart } from '../cart/models/cart.model';
 
 @Module({
-  imports: [SequelizeModule.forFeature([Status, DeliveryMethod, PaymentMethod, DiscountMethod,Booking])],
+  imports: [SequelizeModule.forFeature([Status, DeliveryMethod, PaymentMethod, DiscountMethod,Booking,Cart, Ticket])],
   controllers: [BookingController],
   providers: [BookingService]
 })

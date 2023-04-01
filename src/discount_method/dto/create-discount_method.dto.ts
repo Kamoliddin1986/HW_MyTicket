@@ -1,1 +1,3 @@
-export class CreateDiscountMethodDto {}
+export class CreateDiscountMethodDto {
+    name: string
+}

@@ -1,1 +1,3 @@
-export class CreateDeliveryMethodDto {}
+export class CreateDeliveryMethodDto {
+    name: string
+}

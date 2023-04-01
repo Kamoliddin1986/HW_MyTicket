@@ -12,8 +12,7 @@ interface AdminCreationAttr {
 }
 
 
-@Table({tableName: ''})
-
+@Table({tableName: 'admin'})
 export class Admin extends Model<Admin, AdminCreationAttr>{
 
     @Column({
@@ -25,36 +24,33 @@ export class Admin extends Model<Admin, AdminCreationAttr>{
 
     @Column({
         type: DataType.STRING,
-        allowNull: false
     })
     name: string;
 
     @Column({
         type: DataType.STRING,
-        allowNull: false
     })
     login: string;
+    
     @Column({
         type: DataType.STRING,
-        allowNull: false
     })
     hashed_password: string;
 
     @Column({
         type: DataType.BOOLEAN,
-        allowNull: false
+        defaultValue: true
     })
     is_active: boolean;
 
     @Column({
         type: DataType.BOOLEAN,
-        allowNull: false
+        defaultValue: false
     })
     is_creator: boolean;
 
     @Column({
         type: DataType.STRING,
-        allowNull: false
     })
     hashed_refresh_token: string;
 }

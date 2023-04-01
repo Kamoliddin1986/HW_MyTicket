@@ -3,14 +3,24 @@ import { CreateBookingDto } from './dto/create-booking.dto';
 import { UpdateBookingDto } from './dto/update-booking.dto';
 import { Booking } from './models/booking.model';
 import { InjectModel } from '@nestjs/sequelize';
+import { Ticket } from '../ticket/models/ticket.model';
+import { Cart } from '../cart/models/cart.model';
+import { ADDRGETNETWORKPARAMS } from 'dns';
 
 @Injectable()
 export class BookingService {
   constructor(
-    @InjectModel(Booking) private BookingRepo: typeof Booking
+    @InjectModel(Booking) private BookingRepo: typeof Booking,
+    @InjectModel(Ticket) private TicketRepo: typeof Ticket,
+    @InjectModel(Cart) private CartRepo: typeof Cart,
     ) {}
   
-    create(createBookingDto: CreateBookingDto) {
+    async create(createBookingDto: CreateBookingDto) {
+      const {cart_id} = createBookingDto
+      const cart = await this.CartRepo.findByPk(cart_id)
+      const updateStatusTicket = await this.TicketRepo.update({status_id: 2}, {where: {id: cart.ticket_id}})
+      const updateStatusCart = await this.CartRepo.update({status_id: 2}, {where: {id: cart_id}})
+
       return this.BookingRepo.create(createBookingDto)
     }
   

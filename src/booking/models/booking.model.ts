@@ -4,13 +4,13 @@ import { PaymentMethod } from "../../payment_method/models/payment_method.model"
 import { DeliveryMethod } from "../../delivery_method/models/delivery_method.model";
 import { DiscountMethod } from "../../discount_method/models/discount_method.model";
 import { Status } from "../../status/models/status.model";
+import { NOW } from "sequelize";
 
 
 
 interface BookingCreationAttr {
     cart_id: number;
-    createdAt: Date;
-    fineshed: Date;
+    finished: Date;
     payment_method_id: number;
     delivery_method_id: number;
     discount_coupon_id: number;
@@ -34,15 +34,11 @@ export class Booking extends Model<Booking, BookingCreationAttr> {
         cart_id: number;
 
 
-        @Column({
-            type: DataType.DATE
-        })
-        createdAt: Date;
 
         @Column({
-            type: DataType.DATE
+            type: DataType.DATE,
         })
-        fineshed: Date;
+        finished: Date;
 
         @ForeignKey(() => PaymentMethod)
         @Column({
@@ -64,7 +60,8 @@ export class Booking extends Model<Booking, BookingCreationAttr> {
 
          @ForeignKey(() => Status)
          @Column({
-             type: DataType.INTEGER
+             type: DataType.INTEGER,
+             defaultValue: 2
          })
         status_id: number;
 

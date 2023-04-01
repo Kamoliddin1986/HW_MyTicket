@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { CreateCartDto } from './dto/create-cart.dto';
 import { UpdateCartDto } from './dto/update-cart.dto';
 import { Cart } from './models/cart.model';
@@ -17,11 +17,15 @@ export class CartService {
     async create(createCartDto: CreateCartDto) {
       const { ticket_id,customer_id} = createCartDto
       const finishedAt = AddMinutesToDate(new Date(),30)
-      const status_id = 4
-      const TicketInCart = await this.TicketRepo.findByPk(ticket_id)
-      const updatedTicket = await this.TicketRepo.update({status_id: 4}, {where: {id: ticket_id}})
-      const createdCart = await this.CartRepo.create({...createCartDto,finishedAt,status_id})
-      return createdCart
+      const ticket = await this.TicketRepo.findByPk(ticket_id)
+      if(ticket.status_id == 1){
+        const updatedTicket = await this.TicketRepo.update({status_id: 4}, {where: {id: ticket_id}})
+        const createdCart = await this.CartRepo.create({...createCartDto,finishedAt,status_id: 4})
+        return createdCart
+      }else{
+        throw new BadRequestException("bu ticketni ololmaysiz!")
+      }
+      
     }
   
     async findAll() {

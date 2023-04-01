@@ -1,26 +1,36 @@
 import { Injectable } from '@nestjs/common';
 import { CreateDiscountMethodDto } from './dto/create-discount_method.dto';
 import { UpdateDiscountMethodDto } from './dto/update-discount_method.dto';
+import { DiscountMethod } from './models/discount_method.model';
+import { InjectModel } from '@nestjs/sequelize';
 
 @Injectable()
 export class DiscountMethodService {
-  create(createDiscountMethodDto: CreateDiscountMethodDto) {
-    return 'This action adds a new discountMethod';
+  constructor(
+    @InjectModel(DiscountMethod) private DiscountMethodRepo: typeof DiscountMethod
+    ) {}
+  
+    create(createDiscountMethodDto: CreateDiscountMethodDto) {
+      return this.DiscountMethodRepo.create(createDiscountMethodDto)
+    }
+  
+    async findAll() {
+  
+      const verib = await this.DiscountMethodRepo.findAll({include:{all: true}})
+      return verib
+    }
+  
+    async findOne(id: number) {
+      const verib = await this.DiscountMethodRepo.findByPk(id,{include:{all: true}})
+      return verib
+    }
+  
+    async update(id: number, updateDiscountMethodDto: UpdateDiscountMethodDto) {
+      const verib = await this.DiscountMethodRepo.update(updateDiscountMethodDto, {where: {id}})
+      return verib
+    }
+  
+    remove(id: number) {
+      return this.DiscountMethodRepo.destroy({where: {id}})
+    }
   }
-
-  findAll() {
-    return `This action returns all discountMethod`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} discountMethod`;
-  }
-
-  update(id: number, updateDiscountMethodDto: UpdateDiscountMethodDto) {
-    return `This action updates a #${id} discountMethod`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} discountMethod`;
-  }
-}
