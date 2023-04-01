@@ -2,6 +2,7 @@ import { BelongsTo, Column, DataType, ForeignKey, HasMany, Model, Table } from "
 import { Customer } from "../../customer/models/customer.model";
 import { Region } from "../../region/models/region.model";
 import { District } from "../../district/models/district.model";
+import { Country } from "../../country/models/country.model";
 
 interface CustomerAddressCreationAttr {
     customer_id: number;
@@ -14,7 +15,7 @@ interface CustomerAddressCreationAttr {
     flat: number;
     location: string;
     post_index: string;
-    info: number;
+    info: string;
 
 }
 @Table({tableName: 'customerAddress'})
@@ -38,6 +39,7 @@ export class CustomerAddress extends Model<CustomerAddress, CustomerAddressCreat
     })
     name: string;
 
+    @ForeignKey(() => Country)
     @Column({
         type: DataType.INTEGER,
     })
@@ -93,6 +95,9 @@ export class CustomerAddress extends Model<CustomerAddress, CustomerAddressCreat
 
     @BelongsTo(() => Customer)
     customer: Customer[]
+
+    @BelongsTo(() => Country)
+    country: Country[]
 
     
 

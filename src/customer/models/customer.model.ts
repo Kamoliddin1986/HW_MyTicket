@@ -2,6 +2,7 @@ import { Column, DataType, ForeignKey, HasMany, Model, Table, BelongsTo } from "
 import { Lang } from "../../lang/models/lang.model";
 import { Cart } from "../../cart/models/cart.model";
 import { CustomerCard } from "../../customer_card/models/customer_card.model";
+import { CustomerAddress } from "../../customer_address/models/customer_address.model";
 
 interface CustomerCreationAttr {
 
@@ -83,4 +84,7 @@ export class Customer extends Model<Customer, CustomerCreationAttr> {
     
     @HasMany(() => CustomerCard)
     customerCard: CustomerCard[]
+    
+    @HasMany(() => CustomerAddress)
+    customerAddress: CustomerAddress[]
 }

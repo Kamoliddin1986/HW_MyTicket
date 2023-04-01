@@ -1,26 +1,36 @@
 import { Injectable } from '@nestjs/common';
 import { CreateCustomerAddressDto } from './dto/create-customer_address.dto';
 import { UpdateCustomerAddressDto } from './dto/update-customer_address.dto';
+import { CustomerAddress } from './models/customer_address.model';
+import { InjectModel } from '@nestjs/sequelize';
 
 @Injectable()
 export class CustomerAddressService {
-  create(createCustomerAddressDto: CreateCustomerAddressDto) {
-    return 'This action adds a new customerAddress';
+  constructor(
+    @InjectModel(CustomerAddress) private CustomerAddressRepo: typeof CustomerAddress
+    ) {}
+  
+    create(createCustomerAddressDto: CreateCustomerAddressDto) {
+      return this.CustomerAddressRepo.create(createCustomerAddressDto)
+    }
+  
+    async findAll() {
+  
+      const verib = await this.CustomerAddressRepo.findAll({include:{all: true}})
+      return verib
+    }
+  
+    async findOne(id: number) {
+      const verib = await this.CustomerAddressRepo.findByPk(id,{include:{all: true}})
+      return verib
+    }
+  
+    async update(id: number, updateCustomerAddressDto: UpdateCustomerAddressDto) {
+      const verib = await this.CustomerAddressRepo.update(updateCustomerAddressDto, {where: {id}})
+      return verib
+    }
+  
+    remove(id: number) {
+      return this.CustomerAddressRepo.destroy({where: {id}})
+    }
   }
-
-  findAll() {
-    return `This action returns all customerAddress`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} customerAddress`;
-  }
-
-  update(id: number, updateCustomerAddressDto: UpdateCustomerAddressDto) {
-    return `This action updates a #${id} customerAddress`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} customerAddress`;
-  }
-}

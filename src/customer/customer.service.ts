@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, ForbiddenException, Injectable } from '@nestjs/common';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
 import { Customer } from './models/customer.model';
@@ -7,6 +7,7 @@ import { AuthCustomerDto } from './dto/auth-customer.dto';
 import * as bcrypt from 'bcrypt'
 import { JwtService } from '@nestjs/jwt';
 import { LoginCustomerDto } from './dto/login-customer.dto';
+import { LogoutCustomerDto } from './dto/logout-customer.dto';
 
 
 @Injectable()
@@ -122,5 +123,25 @@ export class CustomerService {
   
     remove(id: number) {
       return this.CustomerRepo.destroy({where: {id}})
+    }
+
+
+    async logout (logoutCustomerDto: LogoutCustomerDto) {
+
+      const userData = await this.jwtService.verify(logoutCustomerDto.refresh_token,{
+        secret: process.env.REFRESH_TOKEN_KEY
+      })
+  
+      if(!userData){
+        throw new ForbiddenException("User not founded")
+      }
+  
+      const updateUser = await this.CustomerRepo.update(
+        {hashed_refresh_token: null},
+        {where: {id:userData.id}, returning: true})
+  
+     
+  
+        return updateUser
     }
   }
