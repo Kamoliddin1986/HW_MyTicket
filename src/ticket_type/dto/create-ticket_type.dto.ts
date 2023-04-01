@@ -1,1 +1,3 @@
-export class CreateTicketTypeDto {}
+export class CreateTicketTypeDto {
+    name: string
+}

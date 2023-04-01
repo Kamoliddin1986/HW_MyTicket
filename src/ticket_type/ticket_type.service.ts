@@ -1,26 +1,36 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTicketTypeDto } from './dto/create-ticket_type.dto';
 import { UpdateTicketTypeDto } from './dto/update-ticket_type.dto';
+import { TicketType } from './models/ticket_type.model';
+import { InjectModel } from '@nestjs/sequelize';
 
 @Injectable()
 export class TicketTypeService {
-  create(createTicketTypeDto: CreateTicketTypeDto) {
-    return 'This action adds a new ticketType';
-  }
-
-  findAll() {
-    return `This action returns all ticketType`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} ticketType`;
-  }
-
-  update(id: number, updateTicketTypeDto: UpdateTicketTypeDto) {
-    return `This action updates a #${id} ticketType`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} ticketType`;
-  }
-}
+    constructor(
+      @InjectModel(TicketType) private TicketTypeRepo: typeof TicketType
+      ) {}
+    
+      create(createTicketTypeDto: CreateTicketTypeDto) {
+        return this.TicketTypeRepo.create(createTicketTypeDto)
+      }
+    
+      async findAll() {
+    
+        const verib = await this.TicketTypeRepo.findAll({include:{all: true}})
+        return verib
+      }
+    
+      async findOne(id: number) {
+        const verib = await this.TicketTypeRepo.findByPk(id,{include:{all: true}})
+        return verib
+      }
+    
+      async update(id: number, updateTicketTypeDto: UpdateTicketTypeDto) {
+        const verib = await this.TicketTypeRepo.update(updateTicketTypeDto, {where: {id}})
+        return verib
+      }
+    
+      remove(id: number) {
+        return this.TicketTypeRepo.destroy({where: {id}})
+      }
+    }

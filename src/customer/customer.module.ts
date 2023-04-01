@@ -6,9 +6,11 @@ import { Lang } from '../lang/models/lang.model';
 import { Customer } from './models/customer.model';
 import { Cart } from '../cart/models/cart.model';
 import { CustomerCard } from '../customer_card/models/customer_card.model';
+import {JwtModule} from '@nestjs/jwt'
+
 
 @Module({
-  imports: [SequelizeModule.forFeature([Lang,Customer,Cart,CustomerCard])],
+  imports: [SequelizeModule.forFeature([Lang,Customer,Cart,CustomerCard]),JwtModule.register({})],
   controllers: [CustomerController],
   providers: [CustomerService]
 })
