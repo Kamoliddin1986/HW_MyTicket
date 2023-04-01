@@ -3,6 +3,7 @@ import { CustomerService } from './customer.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
 import { AuthCustomerDto } from './dto/auth-customer.dto';
+import { LoginCustomerDto } from './dto/login-customer.dto';
 
 @Controller('customer')
 export class CustomerController {
@@ -11,6 +12,10 @@ export class CustomerController {
   @Post('auth')
   auth(@Body() authCustomerDto: AuthCustomerDto) {
     return this.customerService.auth(authCustomerDto);
+  }
+  @Post('login')
+  login(@Body() loginCustomerDto: LoginCustomerDto) {
+    return this.customerService.login(loginCustomerDto);
   }
 
 

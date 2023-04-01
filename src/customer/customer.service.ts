@@ -6,6 +6,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { AuthCustomerDto } from './dto/auth-customer.dto';
 import * as bcrypt from 'bcrypt'
 import { JwtService } from '@nestjs/jwt';
+import { LoginCustomerDto } from './dto/login-customer.dto';
 
 
 @Injectable()
@@ -49,6 +50,35 @@ export class CustomerService {
 
     
     
+    }
+
+    async login(loginCustomerDto: LoginCustomerDto){
+      const {email, password} = loginCustomerDto;
+      const customer = await this.CustomerRepo.findOne({ where: {email}});
+      if(!customer) {
+        throw new BadRequestException('Customer not registered!!');
+      }
+  
+  
+      const isMatchPass = await bcrypt.compare(password, customer.hashed_password)
+      if(!isMatchPass) {
+        throw new BadRequestException('Customer not registered(pass)!!');
+      }
+  
+      const tokens = await this.getToken(customer)
+  
+      const hashed_refresh_token = await bcrypt.hash(tokens.refresh_token,7)
+      
+      const updateCustomer = await this.CustomerRepo.update({
+        hashed_refresh_token: hashed_refresh_token},
+       {where: {id: customer.id}, returning: true}
+      ) 
+  
+     
+      let msg = 'Customer signed in'
+     
+    
+      return {msg, tokens}
     }
 
     async getToken(customer: Customer) {
