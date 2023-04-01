@@ -52,12 +52,14 @@ export class CustomerCard extends Model<CustomerCard,CustomerCardCreationAttr>{
     month: string;
 
     @Column({
-        type: DataType.BOOLEAN
+        type: DataType.BOOLEAN,
+        defaultValue: true
     })
     is_active: boolean;
 
     @Column({
-        type: DataType.BOOLEAN
+        type: DataType.BOOLEAN,
+        defaultValue: false
     })
     is_main: boolean;
 

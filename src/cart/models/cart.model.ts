@@ -7,8 +7,7 @@ import { Booking } from "../../booking/models/booking.model";
 interface CartCreationAttr {
     ticket_id: number;
     customer_id: number;
-    createdAt: Date;
-    fineshedAt: Date;
+    finishedAt: Date;
     status_id: number;
 
 }
@@ -27,29 +26,30 @@ export class Cart extends Model<Cart, CartCreationAttr>{
     @ForeignKey(()=> Ticket)
     @Column({
         type: DataType.INTEGER,
+        allowNull: false
     })
     ticket_id: number;
 
     @ForeignKey(()=> Customer)
     @Column({
         type: DataType.INTEGER,
+        allowNull: false
     })
     customer_id: number;
 
-    @Column({
-        type: DataType.DATE,
-    })
-    createdAt: Date;
+
 
     @Column({
         type: DataType.DATE,
+        allowNull: false
     })
-    fineshedAt: Date;
+    finishedAt: Date;
 
 
     @ForeignKey(()=> Status)
     @Column({
         type: DataType.INTEGER,
+        allowNull: false
     })
     status_id: number;
 
