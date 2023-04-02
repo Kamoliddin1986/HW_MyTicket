@@ -4,9 +4,10 @@ import { PaymentMethodService } from './payment_method.service';
 import { PaymentMethodController } from './payment_method.controller';
 import { PaymentMethod } from './models/payment_method.model';
 import { Booking } from '../booking/models/booking.model';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
-  imports: [SequelizeModule.forFeature([PaymentMethod, Booking])],
+  imports: [SequelizeModule.forFeature([PaymentMethod, Booking]),JwtModule],
   controllers: [PaymentMethodController],
   providers: [PaymentMethodService]
 })

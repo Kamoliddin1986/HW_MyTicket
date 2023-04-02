@@ -7,9 +7,10 @@ import { Venue } from '../venue/models/venue.model';
 import { EventType } from '../event_type/models/event_type.model';
 import { HumanCategory } from '../human_category/models/human_category.model';
 import { Lang } from '../lang/models/lang.model';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
-  imports: [SequelizeModule.forFeature([Event,Lang,Venue,EventType,HumanCategory])],
+  imports: [SequelizeModule.forFeature([Event,Lang,Venue,EventType,HumanCategory]),JwtModule],
   controllers: [EventController],
   providers: [EventService]
 })

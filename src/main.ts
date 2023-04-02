@@ -11,8 +11,8 @@ const start = async () => {
     app.useGlobalPipes(new ValidationPipe())
     
     const config = new DocumentBuilder()
-    .setTitle('NestJS TEST')
-    .setDescription('REST API')
+    .setTitle('My Ticket')
+    .setDescription('Home work')
     .setVersion('1.0.0')
     .addTag('NodeJS, NestJS, Postgres, sequalize')
     .build();

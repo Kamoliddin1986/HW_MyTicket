@@ -6,9 +6,10 @@ import { Customer } from '../customer/models/customer.model';
 import { CustomerAddress } from './models/customer_address.model';
 import { Region } from '../region/models/region.model';
 import { District } from '../district/models/district.model';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
-  imports: [SequelizeModule.forFeature([Customer,CustomerAddress,Region, District])],
+  imports: [SequelizeModule.forFeature([Customer,CustomerAddress,Region, District]),JwtModule],
   controllers: [CustomerAddressController],
   providers: [CustomerAddressService]
 })

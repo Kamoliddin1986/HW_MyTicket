@@ -7,9 +7,10 @@ import { District } from '../district/models/district.model';
 import { Venue } from '../venue/models/venue.model';
 import { CustomerAddress } from '../customer_address/models/customer_address.model';
 import { Country } from '../country/models/country.model';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
-  imports: [SequelizeModule.forFeature([Region,District, Venue,Country,CustomerAddress])],
+  imports: [SequelizeModule.forFeature([Region,District, Venue,Country,CustomerAddress]),JwtModule],
   controllers: [RegionController],
   providers: [RegionService]
 })

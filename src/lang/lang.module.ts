@@ -4,9 +4,10 @@ import { LangService } from './lang.service';
 import { LangController } from './lang.controller';
 import { Lang } from './models/lang.model';
 import { Event } from '../event/models/event.model';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
-  imports: [SequelizeModule.forFeature([Lang,Event])],
+  imports: [SequelizeModule.forFeature([Lang,Event]),JwtModule],
   controllers: [LangController],
   providers: [LangService]
 })

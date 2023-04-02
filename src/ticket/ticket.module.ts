@@ -7,9 +7,10 @@ import { Event } from '../event/models/event.model';
 import { Seat } from '../seat/models/seat.model';
 import { Status } from '../status/models/status.model';
 import { Cart } from '../cart/models/cart.model';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
-  imports: [SequelizeModule.forFeature([Ticket,Event,Seat, Status, Cart])],
+  imports: [SequelizeModule.forFeature([Ticket,Event,Seat, Status, Cart]),JwtModule],
   controllers: [TicketController],
   providers: [TicketService]
 })

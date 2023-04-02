@@ -4,7 +4,9 @@ import { CreateVenueTypeDto } from './dto/create-venue_type.dto';
 import { UpdateVenueTypeDto } from './dto/update-venue_type.dto';
 import { isActiveAdminGuard } from '../guard/isActiveAdmin.guard';
 import { JwtAuthGuard } from '../guard/jwt-auth.guard';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags("Venue-type")
 @Controller('venue-type')
 export class VenueTypeController {
   constructor(private readonly venueTypeService: VenueTypeService) {}
@@ -35,7 +37,7 @@ export class VenueTypeController {
     return this.venueTypeService.update(+id, updateVenueTypeDto);
   }
 
-    @UseGuards(isActiveAdminGuard)
+  @UseGuards(isActiveAdminGuard)
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {

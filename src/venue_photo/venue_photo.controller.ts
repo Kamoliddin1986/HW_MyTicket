@@ -4,7 +4,10 @@ import { CreateVenuePhotoDto } from './dto/create-venue_photo.dto';
 import { UpdateVenuePhotoDto } from './dto/update-venue_photo.dto';
 import { isActiveAdminGuard } from '../guard/isActiveAdmin.guard';
 import { JwtAuthGuard } from '../guard/jwt-auth.guard';
+import { ApiTags } from '@nestjs/swagger';
 
+
+@ApiTags('venue-photo')
 @Controller('venue-photo')
 export class VenuePhotoController {
   constructor(private readonly venuePhotoService: VenuePhotoService) {}

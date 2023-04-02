@@ -22,6 +22,7 @@ export class AdminController {
   }
 
   @UseGuards(isCreatorGuard)
+  @UseGuards(isActiveAdminGuard)
   @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
@@ -35,12 +36,14 @@ export class AdminController {
     return this.adminService.findOne(+id);
   }
   @UseGuards(isCreatorGuard)
+  @UseGuards(isActiveAdminGuard)
   @UseGuards(JwtAuthGuard)
   @Patch(':id/setrole')
   update(@Param('id') id: string, @Body() activeCreatorAdminDto: ActiveCreatorAdminDto) {
     return this.adminService.update(+id, activeCreatorAdminDto);
   }
   @UseGuards(isCreatorGuard)
+  @UseGuards(isActiveAdminGuard)
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
