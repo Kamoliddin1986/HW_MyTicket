@@ -1,3 +1,4 @@
+import { ApiTags } from '@nestjs/swagger';
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { EventService } from './event.service';
 import { CreateEventDto } from './dto/create-event.dto';
@@ -5,6 +6,8 @@ import { UpdateEventDto } from './dto/update-event.dto';
 import { isActiveAdminGuard } from '../guard/isActiveAdmin.guard';
 import { JwtAuthGuard } from '../guard/jwt-auth.guard';
 
+
+@ApiTags('event')
 @Controller('event')
 export class EventController {
   constructor(private readonly eventService: EventService) {}

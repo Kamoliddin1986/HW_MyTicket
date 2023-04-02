@@ -1,3 +1,4 @@
+import { ApiTags } from '@nestjs/swagger';
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { CountryService } from './country.service';
 import { CreateCountryDto } from './dto/create-country.dto';
@@ -5,6 +6,8 @@ import { UpdateCountryDto } from './dto/update-country.dto';
 import { isActiveAdminGuard } from '../guard/isActiveAdmin.guard';
 import { JwtAuthGuard } from '../guard/jwt-auth.guard';
 
+
+@ApiTags('country')
 @Controller('country')
 export class CountryController {
   constructor(private readonly countryService: CountryService) {}

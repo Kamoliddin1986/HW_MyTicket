@@ -1,3 +1,4 @@
+import { ApiTags } from '@nestjs/swagger';
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { SeatService } from './seat.service';
 import { CreateSeatDto } from './dto/create-seat.dto';
@@ -5,6 +6,7 @@ import { UpdateSeatDto } from './dto/update-seat.dto';
 import { isActiveAdminGuard } from '../guard/isActiveAdmin.guard';
 import { JwtAuthGuard } from '../guard/jwt-auth.guard';
 
+@ApiTags('seat')
 @Controller('seat')
 export class SeatController {
   constructor(private readonly seatService: SeatService) {}

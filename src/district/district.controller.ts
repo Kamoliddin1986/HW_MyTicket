@@ -1,3 +1,4 @@
+import { ApiTags } from '@nestjs/swagger';
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { DistrictService } from './district.service';
 import { CreateDistrictDto } from './dto/create-district.dto';
@@ -5,6 +6,8 @@ import { UpdateDistrictDto } from './dto/update-district.dto';
 import { isActiveAdminGuard } from '../guard/isActiveAdmin.guard';
 import { JwtAuthGuard } from '../guard/jwt-auth.guard';
 
+
+@ApiTags('district')
 @Controller('district')
 export class DistrictController {
   constructor(private readonly districtService: DistrictService) {}

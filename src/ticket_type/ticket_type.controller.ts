@@ -1,3 +1,4 @@
+import { ApiTags } from '@nestjs/swagger';
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { TicketTypeService } from './ticket_type.service';
 import { CreateTicketTypeDto } from './dto/create-ticket_type.dto';
@@ -5,6 +6,8 @@ import { UpdateTicketTypeDto } from './dto/update-ticket_type.dto';
 import { JwtAuthGuard } from '../guard/jwt-auth.guard';
 import { isActiveAdminGuard } from '../guard/isActiveAdmin.guard';
 
+
+@ApiTags('ticket-type')
 @Controller('ticket-type')
 export class TicketTypeController {
   constructor(private readonly ticketTypeService: TicketTypeService) {}

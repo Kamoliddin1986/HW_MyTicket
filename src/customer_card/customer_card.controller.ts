@@ -1,3 +1,4 @@
+import { ApiTags } from '@nestjs/swagger';
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { CustomerCardService } from './customer_card.service';
 import { CreateCustomerCardDto } from './dto/create-customer_card.dto';
@@ -5,6 +6,8 @@ import { UpdateCustomerCardDto } from './dto/update-customer_card.dto';
 import { isActiveAdminGuard } from '../guard/isActiveAdmin.guard';
 import { JwtAuthGuard } from '../guard/jwt-auth.guard';
 
+
+@ApiTags('customer-card')
 @Controller('customer-card')
 export class CustomerCardController {
   constructor(private readonly customerCardService: CustomerCardService) {}

@@ -1,3 +1,4 @@
+import { ApiTags } from '@nestjs/swagger';
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { DiscountMethodService } from './discount_method.service';
 import { CreateDiscountMethodDto } from './dto/create-discount_method.dto';
@@ -5,6 +6,8 @@ import { UpdateDiscountMethodDto } from './dto/update-discount_method.dto';
 import { isActiveAdminGuard } from '../guard/isActiveAdmin.guard';
 import { JwtAuthGuard } from '../guard/jwt-auth.guard';
 
+
+@ApiTags('discount-method')
 @Controller('discount-method')
 export class DiscountMethodController {
   constructor(private readonly discountMethodService: DiscountMethodService) {}

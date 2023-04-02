@@ -1,3 +1,4 @@
+import { ApiTags } from '@nestjs/swagger';
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { CustomerService } from './customer.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
@@ -9,6 +10,8 @@ import { JwtAuthGuard } from '../guard/jwt-auth.guard';
 import { isActiveAdminGuard } from '../guard/isActiveAdmin.guard';
 import { isCustomerGuard } from '../guard/isCustomer.guard copy';
 
+
+@ApiTags('customer')
 @Controller('customer')
 export class CustomerController {
   constructor(private readonly customerService: CustomerService) {}

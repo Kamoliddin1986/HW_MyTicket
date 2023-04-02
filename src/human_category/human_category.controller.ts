@@ -1,3 +1,4 @@
+import { ApiTags } from '@nestjs/swagger';
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { HumanCategoryService } from './human_category.service';
 import { CreateHumanCategoryDto } from './dto/create-human_category.dto';
@@ -5,6 +6,8 @@ import { UpdateHumanCategoryDto } from './dto/update-human_category.dto';
 import { isActiveAdminGuard } from '../guard/isActiveAdmin.guard';
 import { JwtAuthGuard } from '../guard/jwt-auth.guard';
 
+
+@ApiTags('human-category')
 @Controller('human-category')
 export class HumanCategoryController {
   constructor(private readonly humanCategoryService: HumanCategoryService) {}

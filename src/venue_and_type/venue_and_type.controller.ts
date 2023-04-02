@@ -1,3 +1,4 @@
+import { ApiTags } from '@nestjs/swagger';
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { VenueAndTypeService } from './venue_and_type.service';
 import { CreateVenueAndTypeDto } from './dto/create-venue_and_type.dto';
@@ -5,6 +6,8 @@ import { UpdateVenueAndTypeDto } from './dto/update-venue_and_type.dto';
 import { isActiveAdminGuard } from '../guard/isActiveAdmin.guard';
 import { JwtAuthGuard } from '../guard/jwt-auth.guard';
 
+
+@ApiTags('venue-and-type')
 @Controller('venue-and-type')
 export class VenueAndTypeController {
   constructor(private readonly venueAndTypeService: VenueAndTypeService) {}

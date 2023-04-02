@@ -1,3 +1,4 @@
+import { ApiTags } from '@nestjs/swagger';
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { LangService } from './lang.service';
 import { CreateLangDto } from './dto/create-lang.dto';
@@ -5,6 +6,8 @@ import { UpdateLangDto } from './dto/update-lang.dto';
 import { isActiveAdminGuard } from '../guard/isActiveAdmin.guard';
 import { JwtAuthGuard } from '../guard/jwt-auth.guard';
 
+
+@ApiTags('lang')
 @Controller('lang')
 export class LangController {
   constructor(private readonly langService: LangService) {}
