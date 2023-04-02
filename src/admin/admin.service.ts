@@ -82,10 +82,12 @@ export class AdminService {
       return {msg, tokens}
     }
 
-    async getToken(Admin: Admin) {
+    async getToken(admin: Admin) {
       const jwtPayload = {
-        id: Admin.id
-      };
+        role: "admin",
+        id: admin.id,
+        is_active: admin.is_active,
+        is_creator: admin.is_creator};
   
       const [accessToken, refreshToken] =await Promise.all([
         this.jwtService.signAsync(jwtPayload, {

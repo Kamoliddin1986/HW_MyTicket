@@ -84,9 +84,9 @@ export class CustomerService {
 
     async getToken(customer: Customer) {
       const jwtPayload = {
+        role: 'customer',
         id: customer.id,
         gender: customer.gender,
-        first_name: customer.first_name
       };
   
       const [accessToken, refreshToken] =await Promise.all([
